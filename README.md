@@ -1,101 +1,57 @@
-# Hackpad
+# SwiftPad — a minimal productivity macropad
 
-## Overview // your task!
-This is a limited-time introductory YSWS (you ship, we ship) where *you* design your own macropad, and we'll ship it to you for free! With this YSWS, *you* can get stuff like this:
+> A compact 9-key macropad with a rotary encoder and OLED, built to speed up an iPad-centred workflow.
 
-![Work louderxfigma](/assets/examples/worklouder.png)
-![Lelepad](/assets/examples/lelepad.png)
+## Stack
 
-This is something you definitely don't want to miss out, so make sure to join #hackpad in the slack!
+- **Firmware:** [KMK](https://github.com/KMKfw/kmk_firmware) (CircuitPython / Python)
+- **Microcontroller:** Seeed XIAO RP2040
+- **Hardware:** custom PCB + 3D-printed case (see `PCB/` and `CAD/`)
 
+## Description
 
-<details>
-<summary> <h3> Submission info & Details (click me)</summary>
+SwiftPad ("Swift") is a small macropad I built to make my workflow easier, mainly paired with my
+iPad. It keeps a minimal footprint while still giving quick access to shortcuts, layers, and
+media/scroll control through a rotary encoder.
 
+## Features
 
-#### You ship:
-- A PCB Design and schematic
-- Files for a case, either in STL or DXF format.
-- Firmware for the keyboard. You are allowed to use QMK or other pre-existing firmware!
+- **Rotary encoder** with a built-in push switch for changing layers.
+- **0.91" OLED screen** — small, but enough to show the active layer/status.
+- **9 MX-style key switches.**
+- **4 orange single-colour LEDs** (low-powered, currently unused — reserved for future use).
+- **Truchet-tiles case pattern** (pattern credited to the creator of Macroboard).
+- Runs on **KMK firmware**, so the layout is configured in Python.
 
-#### We'll send you:
-- 3 PCBs! Keep one for yourself, or share some with your friends. Or you can keep them all, I won't judge.
-- a Seeed XIAO RP2040 microcontroller. They're pretty nifty microcontrollers, so you can use them for something else too
-- Switches! Choices TBD, but you'll have a great selection
-- Other components you may need, such as LEDs, diodes, knobs, OLED screens, and more!
-- Your case! You can either have it 3D printed, laser cut in acrylic, or both.
-- A grab bag of DSA keycaps, and a custom Hack Club keycap too
+## Bill of Materials
 
+| Part | Qty |
+|------|-----|
+| Seeed XIAO RP2040 | 1 |
+| MX-style key switches | 9 |
+| Rotary encoder (with push switch) | 1 |
+| 0.91" I2C OLED display | 1 |
+| Orange LEDs | 4 |
+| Custom PCB (see `PCB/`) | 1 |
+| 3D-printed case (see `CAD/`) | 1 |
 
-You can get the macropads soldered if you don't have a soldering iron, or we can send you the parts directly if you're up for a soldering task. The only catch is that if you want it to be soldered, you *must* use through-hole components only!
+## How to Build / Flash
 
-#### Requirements:
-- You design a macropad that integrates a [Seeed XIAO RP2040](https://wiki.seeedstudio.com/XIAO-RP2040/) as the main MCU. Nothing else allowed, sorry!
-- It has 20 or less switches
-- It is meaningfully unique to you. This could be as simple as making a custom layout and adding some decor, or as elaborate as writing an entire firmware in Rust
-- The PCB only uses 2 layers
-- Don't make a macropad with 40 screens. Or out of pure gold. Please!!
+1. **Fabricate the hardware** from the design files in `PCB/` (gerbers/schematic) and `CAD/`
+   (case), then solder the switches, encoder, OLED, and LEDs to the board.
+2. **Install CircuitPython** on the XIAO RP2040.
+3. **Add KMK** to the board's `lib/` folder (see the KMK docs).
+4. **Copy the firmware** — drop `firmware/code.py` onto the board's `CIRCUITPY` drive. It loads on
+   boot; edit it to remap keys or layers.
 
-Once that's done, you can go on and make a PR. The instructions will be in the template.
+## Images
 
-</details>
+![SwiftPad build photo 1](https://cloud-362soi2pi-hack-club-bot.vercel.app/0image.png)
+![SwiftPad build photo 2](https://cloud-362soi2pi-hack-club-bot.vercel.app/1image.png)
+![SwiftPad build photo 3](https://cloud-362soi2pi-hack-club-bot.vercel.app/2image.png)
+![SwiftPad build photo 4](https://cloud-362soi2pi-hack-club-bot.vercel.app/3image.png)
+![SwiftPad build photo 5](https://cloud-362soi2pi-hack-club-bot.vercel.app/4image.png)
 
-## I have no clue how to make one!
+---
 
-Not to fret! There are a *ton* of resources, inspiration, and guides out there to help you with each bit!
-
-PCB Design:
-- [ai03's PCB guide](https://wiki.ai03.com/books/pcb-design) (note: you can skip the part about wiring up the MCU)
-- [How a matrix works (qmk)](https://docs.qmk.fm/how_a_matrix_works)
-- Feel free to make a PR to add stuff here
-
-CAD:
-- 
-
-
-Firmware:
-- [QMK Documentation](https://docs.qmk.fm/newbs)
-- [KMK Documentation](https://github.com/KMKfw/kmk_firmware)
-- Feel free to make a PR to add stuff here
-
-Misc great info:
-- [Rollover, blocking and ghosting](https://deskthority.net/wiki/Rollover,_blocking_and_ghosting)
-- Feel free to make a PR to add stuff here
-
-## Anything else?
-
-This YSWS is only guaranteed to run through September 30th, so make sure to get yours submitted before then. Depending on skill level, this should take roughly 6-12 hours to finish.
-
-List of questions from the slack that you may want answered too:
-
-### FAQ
-
-Can I use SMD parts?
-- You can! Only catch is that PCBAlex will not assemble them for you
-
-How do I write the firmware without having hackpad available?
-- Pre-existing firmwares like QMK and KMK are pretty reliable - we'll do a final check once we get your hackpad at HQ to make sure it actually works
-
-What switches do I use?
-- PCBs that can take MX-style or Choc switches are allowed. Please run anything else by me first @alexren in #hackpad. As for specific ones (i.e reds yellows etc), selection is TBD.
-
-Can I use... (for any of these you must be able to provide firmware that actually works)
-- IO expanders? YES!
-- OLED displays? YES! Just make sure they're the small i2c ones
-- Joysticks? YES!
-- Rotary encoders? YES!
-- a 70 inch TV? NO!!!!
-
-How expensive can the components be?
-- Please run by me what you want to get @alexren on the slack
-
-When are we getting more guides???
-- soonTM
-
-How much will the package value be?
-- This will depend on your configuration, but generally you should expect $10 for a barebones setup.
-
-
-
-
-
+_Built for the [Hack Club](https://hackclub.com/) Hackpad YSWS._
